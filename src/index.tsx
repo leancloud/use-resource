@@ -137,9 +137,10 @@ export function createResourceHook<Args extends unknown[], T>(
     }, [...deps, condition, reloadFlag]);
 
     useEffect(() => {
-      if (!promise) {
-        return setRequestState([undefined, undefined, false]);
-      }
+      if (!promise) setRequestState([undefined, undefined, condition]);
+    }, [condition, promise]);
+    useEffect(() => {
+      if (!promise) return;
       let isCurrent = true;
       setRequestState([undefined, undefined, true]);
       promise
