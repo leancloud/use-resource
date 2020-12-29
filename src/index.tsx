@@ -60,7 +60,8 @@ export function useLocalState<T, E extends ResourceExtra>(
     dataRef.current = data;
     setValue(data);
   }
-  return [value, { ...extra, setData: setValue }] as const;
+  const newExtra = useMemo(() => ({ ...extra, setData: setValue }), [extra]);
+  return [value, newExtra] as const;
 }
 
 export function useDefault<T, E extends ResourceExtra>(
@@ -128,7 +129,7 @@ export function createResourceHook<Args extends unknown[], T>(
               promise: result,
               abort: noop,
             };
-      // The rejected promise will alaways be handled later (in the next useEffect)
+      // The rejected promise will always be handled later (in the next useEffect)
       // handle it immediately to prevent unhandled Promise rejection warning
       requestResult.promise.catch(() => {});
       setRequestResult(requestResult);
@@ -151,7 +152,14 @@ export function createResourceHook<Args extends unknown[], T>(
       };
     }, [promise]);
 
-    return [data, { error, loading, reload, abort }];
+    const extra = useMemo(() => ({ error, loading, reload, abort }), [
+      error,
+      loading,
+      reload,
+      abort,
+    ]);
+
+    return [data, extra];
   };
 }
 
