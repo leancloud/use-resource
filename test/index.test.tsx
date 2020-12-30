@@ -117,23 +117,3 @@ test('Conditional', async () => {
     expect(error).toBe(undefined);
   })();
 });
-
-test('Treat ResourceExtra as a whole', async () => {
-  const { result, rerender, waitForNextUpdate } = renderHook(() =>
-    useSimpleEcho(['1'])
-  );
-  const extraSnapshot1 = result.current[1];
-
-  rerender();
-
-  expect(result.current[1]).toBe(extraSnapshot1);
-
-  await waitForNextUpdate();
-
-  const extraSnapshot2 = result.current[1];
-  expect(extraSnapshot1).not.toBe(extraSnapshot2);
-
-  rerender();
-
-  expect(result.current[1]).toBe(extraSnapshot2);
-});
