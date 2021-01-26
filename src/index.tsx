@@ -84,11 +84,11 @@ export function useSmoothReload<T, E extends ResourceExtra>(
   return extra.loading ? ([dataRef.current, extra] as const) : resource;
 }
 
-interface ResourceHookOptions {
+export interface ResourceHookOptions {
   deps?: DependencyList;
   condition?: boolean;
 }
-type ResourceHook<Args, T, E extends ResourceExtra = ResourceExtra> = (
+export type ResourceHook<Args, T, E extends ResourceExtra = ResourceExtra> = (
   requestArgs: Args,
   options?: ResourceHookOptions
 ) => Resource<T | undefined, E>;
