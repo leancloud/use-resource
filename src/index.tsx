@@ -130,7 +130,7 @@ export function createResourceHook<Args extends unknown[], T>(
             };
       // The rejected promise will always be handled later (in the next useEffect)
       // handle it immediately to prevent unhandled Promise rejection warning
-      requestResult.promise.catch(() => {});
+      requestResult.promise.catch(noop);
       setRequestResult(requestResult);
       return requestResult.abort;
       // eslint-disable-next-line react-hooks/exhaustive-deps
